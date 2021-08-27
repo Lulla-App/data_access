@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey, Table
 from ... import Base
 
-microsoft_oauth_token_scope_connection = Table(
-    "microsoft_oauth_token_scope_connection",
+microsoft_oauth_token_scope_correlation = Table(
+    "microsoft_oauth_token_scope_correlation",
     Base.metadata,
     Column(
         "oauth_token_id",

@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey, Table
 from ... import Base
 
-microsoft_scope_uri_connection = Table(
-    "microsoft_scope_uri_connection",
+microsoft_scope_uri_correlation = Table(
+    "microsoft_scope_uri_correlation",
     Base.metadata,
     Column(
         "scope_uri_id",

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 from ... import Base
-from .microsoft_scope_uri_connection import microsoft_scope_uri_connection
+from .microsoft_scope_uri_correlation import microsoft_scope_uri_correlation
 
 
 class MicrosoftScopeUri(Base):
@@ -12,6 +12,6 @@ class MicrosoftScopeUri(Base):
 
     scopes = relationship(
         "MicrosoftScope",
-        secondary=microsoft_scope_uri_connection,
+        secondary=microsoft_scope_uri_correlation,
         back_populates="uris",
     )

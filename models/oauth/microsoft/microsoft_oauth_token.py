@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, Interval, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from ... import Base
-from .microsoft_oauth_token_scope_connection import (
-    microsoft_oauth_token_scope_connection,
+from .microsoft_oauth_token_scope_correlation import (
+    microsoft_oauth_token_scope_correlation,
 )
 import datetime
 
@@ -33,6 +33,6 @@ class MicrosoftOAuthToken(Base):
 
     scopes = relationship(
         "MicrosoftScope",
-        secondary=microsoft_oauth_token_scope_connection,
+        secondary=microsoft_oauth_token_scope_correlation,
         back_populates="oauth_tokens",
     )
