@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Interval, DateTime
+from sqlalchemy import Column, Integer, String, Interval, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from ... import Base
@@ -22,7 +22,7 @@ class MicrosoftOAuthToken(Base):
     refresh_token = Column("refresh_token", String, nullable=False)
     expires_in = Column("expires_in", Interval, nullable=False)
     ext_expires_in = Column("ext_expires_in", Interval)
-    token_type = Column("token_type", String, nullable=False)
+    token_type = Column("token_type", ForeignKey("oauth_token_type.id"), nullable=False)
     last_refreshed = Column(
         "last_refreshed",
         DateTime(),
