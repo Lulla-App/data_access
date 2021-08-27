@@ -7,4 +7,9 @@ from .asset_connections import (
     GoogleCalendarToMicrosoftTodoConnection,
     MicrosoftTodoToGoogleCalendarConnection,
 )
-from .oauth import MicrosoftOAuthToken, MicrosoftScope
+from .oauth import (
+    OAuthTokenType,
+    MicrosoftOAuthToken,
+    MicrosoftScope,
+    MicrosoftScopeUri,
+)
