@@ -1,8 +1,18 @@
-from ....models import MicrosoftOAuthToken, MicrosoftScope, SessionFactory, engine
+from ....models import (
+    MicrosoftOAuthToken as MOAT_da,
+    SessionFactory,
+    MicrosoftScope as MS_da,
+    OAuthTokenType as OATT_da,
+)
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from datetime import timedelta
-from ....glue import MicrosoftOAuthToken as MAT_glue
+from ....glue import (
+    MicrosoftOAuthToken as MOAT_glue,
+    MicrosoftScopeMap,
+    MicrosoftScope as MS_glue,
+    TokenType as OATT_glue,
+)
 from typing import Iterable
 
 
@@ -15,26 +25,32 @@ def get_all_scopes_from_glue_scope_map(
     return all_scopes
 
 
-def add_microsoft_oauth_tokens_to_database(oauth_tokens: Iterable[MAT_glue]):
+def add_microsoft_oauth_tokens_to_database(oauth_tokens: Iterable[MOAT_glue]):
     with SessionFactory() as session:
-
-        statement = select(MicrosoftScope)
+        # GLOBAL CACHE >
+        statement = select(MS_da)
         result = session.execute(statement).scalars().all()
         all_scopes_map = {scope.name: scope for scope in result}
+        # ^
 
+        # GLOBAL CACHE >
+        statement = select(OATT_da)
+        result = session.execute(statement).scalars().all()
+        all_token_types_map = {token_type.name: token_type for token_type in result}
+        # ^
         for token in oauth_tokens:
             try:
-                model = MicrosoftOAuthToken(
+                model = MOAT_da(
                     access_token=token.access_token,
                     refresh_token=token.refresh_token,
                     expires_in=token.expires_in,
                     ext_expires_in=token.ext_expires_in,
-                    token_type=token.token_type.value,
+                    token_type=all_token_types_map[token.token_type.value].id,
                 )
 
                 scopes = get_all_scopes_from_glue_scope_map(token.scopes)
                 for scope in scopes:
-                    model.scopes.add(all_scopes_map[scope.value])
+                    model.scopes.append(all_scopes_map[scope.value])
 
                 session.add(model)
                 session.commit()

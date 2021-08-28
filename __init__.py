@@ -6,4 +6,5 @@ from .api import (
     add_oauth_tokens_to_database,
     get_oauth_token_from_database,
     add_connections_to_database,
+    add_microsoft_oauth_tokens_to_database,
 )
