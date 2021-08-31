@@ -7,7 +7,7 @@ from ....models import (
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from datetime import timedelta
-from ....glue import (
+from glue import (
     MicrosoftOAuthToken as MOAT_glue,
     MicrosoftScopeMap,
     MicrosoftScope as MS_glue,
@@ -18,7 +18,7 @@ from typing import Iterable
 
 def get_all_scopes_from_glue_scope_map(
     scope_map: MicrosoftScopeMap,
-) -> set[MicrosoftScope]:
+) -> set[MS_glue]:
     all_scopes = set()
     for scope_set in scope_map.values():
         all_scopes.update(scope_set)
