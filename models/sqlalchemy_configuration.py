@@ -7,7 +7,7 @@ import os
 https://docs.sqlalchemy.org/en/14/core/engines.html
 https://www.python.org/dev/peps/pep-0249/
 """
-engine = create_engine(os.environ["DATABASE_URL"], echo=True)
+engine = create_engine(os.environ["DATABASE_URL"], echo=False)
 
 # Configure Session
 SessionFactory = sessionmaker(bind=engine)
