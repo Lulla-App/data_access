@@ -5,7 +5,6 @@ from ....models import (
     OAuthTokenType as OATT_da,
 )
 from sqlalchemy import select
-from sqlalchemy.orm import Session
 from datetime import timedelta
 from glue import (
     MicrosoftOAuthToken as MOAT_glue,

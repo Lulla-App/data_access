@@ -8,4 +8,7 @@ from .add_google_calendar_calendars_to_database import (
     add_google_calendar_calendars_to_database,
 )
 from .add_microsoft_todo_lists_to_database import add_microsoft_todo_lists_to_database
-from .oauth import add_microsoft_oauth_tokens_to_database
+from .oauth import (
+    add_microsoft_oauth_tokens_to_database,
+    update_microsoft_oauth_tokens_in_database,
+)

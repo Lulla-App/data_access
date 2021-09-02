@@ -19,7 +19,9 @@ class MicrosoftOAuthToken(Base):
 
     id = Column("id", Integer, primary_key=True)
     access_token = Column("access_token", String, nullable=False)
-    refresh_token = Column("refresh_token", String, nullable=False)
+    refresh_token = Column(
+        "refresh_token", String, nullable=False
+    )  # should be nullable
     expires_in = Column("expires_in", Interval, nullable=False)
     ext_expires_in = Column("ext_expires_in", Interval)
     token_type = Column("token_type", ForeignKey("oauth_token_type.id"), nullable=False)
