@@ -20,10 +20,12 @@ MOAT_ID = int
 def get_all_scopes_from_glue_scope_map(
     scope_map: MicrosoftScopeMap,
 ) -> set[MS_glue]:
+    # TEMP SOLUTION >
     all_scopes = set()
     for scope_set in scope_map.values():
         all_scopes.update(scope_set)
     return all_scopes
+    # ^
 
 
 def update_microsoft_oauth_tokens_in_database(
@@ -44,13 +46,15 @@ def update_microsoft_oauth_tokens_in_database(
         # ^
 
         for new_token_data, token_id in oauth_tokens:
-            statement = select(MOAT_da).where(id=token_id)
-            token = session.execute(statement).scalar_one()
+            statement = select(MOAT_da).filter_by(id=token_id)
+            token: MOAT_da = session.execute(statement).scalar_one()
 
             token.access_token = new_token_data.access_token
             token.refresh_token = new_token_data.refresh_token  # maybe optional
             token.expires_in = new_token_data.expires_in
+            token.ext_expires_in = new_token_data.ext_expires_in
             token.token_type = all_token_types_map[new_token_data.token_type.value].id
+            token.last_refreshed = new_token_data.created_on
 
             new_scopes = get_all_scopes_from_glue_scope_map(new_token_data.scopes)
 

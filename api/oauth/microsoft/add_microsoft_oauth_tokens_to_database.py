@@ -45,6 +45,7 @@ def add_microsoft_oauth_tokens_to_database(oauth_tokens: Iterable[MOAT_glue]):
                     expires_in=token.expires_in,
                     ext_expires_in=token.ext_expires_in,
                     token_type=all_token_types_map[token.token_type.value].id,
+                    last_refreshed=token.created_on,
                 )
 
                 scopes = get_all_scopes_from_glue_scope_map(token.scopes)

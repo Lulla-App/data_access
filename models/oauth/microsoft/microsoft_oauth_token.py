@@ -38,3 +38,4 @@ class MicrosoftOAuthToken(Base):
         secondary=microsoft_oauth_token_scope_correlation,
         back_populates="oauth_tokens",
     )
+    token = relationship("OAuthTokenType")
