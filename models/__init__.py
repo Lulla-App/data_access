@@ -12,4 +12,7 @@ from .oauth import (
     MicrosoftOAuthToken,
     MicrosoftScope,
     MicrosoftScopeUri,
+    GoogleOAuthToken,
+    GoogleScope,
+    GoogleScopeUri,
 )
