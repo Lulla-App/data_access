@@ -56,14 +56,15 @@ def update_microsoft_oauth_tokens_in_database(
             token.token_type = all_token_types_map[new_token_data.token_type.value].id
             token.last_refreshed = new_token_data.created_on
 
+            # TEMP SOLUTION >
             new_scopes = get_all_scopes_from_glue_scope_map(new_token_data.scopes)
 
-            # scopes = get_all_scopes_from_glue_scope_map(token.scopes)
             for scope in token.scopes:
                 if MS_glue(scope.name) not in new_scopes:
                     token.scopes.remove(scope)
             for scope in new_scopes:
                 if all_scopes_map[scope.value] not in token.scopes:
                     token.scopes.append(all_scopes_map[scope.value])
+            # ^
 
             session.commit()

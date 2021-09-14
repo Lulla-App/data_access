@@ -50,19 +50,19 @@ def update_google_oauth_tokens_in_database(
             token: GOAT_da = session.execute(statement).scalar_one()
 
             token.access_token = new_token_data.access_token
-            token.refresh_token = new_token_data.refresh_token  # maybe optional
             token.expires_in = new_token_data.expires_in
             token.token_type = all_token_types_map[new_token_data.token_type.value].id
             token.last_refreshed = new_token_data.created_on
 
+            # TEMP SOLUTION >
             new_scopes = get_all_scopes_from_glue_scope_map(new_token_data.scopes)
 
-            # scopes = get_all_scopes_from_glue_scope_map(token.scopes)
             for scope in token.scopes:
                 if GS_glue(scope.name) not in new_scopes:
                     token.scopes.remove(scope)
             for scope in new_scopes:
                 if all_scopes_map[scope.value] not in token.scopes:
                     token.scopes.append(all_scopes_map[scope.value])
+            # ^
 
             session.commit()
